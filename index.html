@@ -11,6 +11,13 @@
 </head>
 
 <body>
+	<template id="result-template">
+		<div class="result">
+			<span class="cpf"></span>
+			<span class="name"></span>
+		</div>
+	</template>
+
 	<div class="form">
 		<form onsubmit="return onFormSubmit();">
 			<input id="cpf-input" type="text" placeholder="CPF" autofocus>
