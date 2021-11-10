@@ -17,3 +17,10 @@ td, th {
 	border: 1px gray solid;
 }
 
+thead tr {
+	border-bottom: 4px gray solid;
+}
+
+tfoot tr {
+	border-top: 4px gray solid;
+}
