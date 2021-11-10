@@ -1,5 +1,5 @@
 html {
-	font-family: 'Clear Sans';
+	font-family: 'Comic Sans MS';
 }
 
 table {
@@ -14,13 +14,17 @@ td, th {
 	min-width: 20vw;
 	padding: 4px;
 
-	border: 1px gray solid;
+	border: 1px darkgoldenrod solid;
 }
 
 thead tr {
-	border-bottom: 4px gray solid;
+	border-bottom: 4px darkgoldenrod solid;
+}
+
+tbody tr:nth-child(odd) {
+	background: lightyellow;
 }
 
 tfoot tr {
-	border-top: 4px gray solid;
+	border-top: 4px darkgoldenrod solid;
 }
