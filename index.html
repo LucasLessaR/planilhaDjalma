@@ -4,18 +4,17 @@
 <head>
 	<meta charset="utf-8">
 	<title>Pesquisa</title>
-	<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
-	<!-- https://github.com/okfn/csv.js/ -->
-	<!-- <script src="csv.min.js"></script> -->
+	<link rel="stylesheet" type="text/css" href="styles.css" media="screen" />
 	<script src="main.js"></script>
 </head>
 
 <body>
 	<template id="result-template">
-		<div class="result">
-			<span class="cpf"></span>
-			<span class="name"></span>
-		</div>
+		<tr>
+			<td class="timestamp"></td>
+			<td class="invoice"></td>
+			<td class="paid"></td>
+		</tr>
 	</template>
 
 	<div class="form">
@@ -25,8 +24,25 @@
 		</form>
 	</div>
 
-	<div class="results">
-	</div>
+	<table class="results">
+		<thead>
+			<tr>
+				<th>ano mes</th>
+				<th>faturado</th>
+				<th>pago</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td></td>
+				<td class="invoice"></td>
+				<td class="paid"></td>
+				<td>total</td>
+			</tr>
+		</tfoot>
+	</table>
 </body>
 
 </html>

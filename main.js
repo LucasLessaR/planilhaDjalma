@@ -1,11 +1,11 @@
 const SUBMIT_BUTTON_VALUE = "Buscar";
 
 const STATE = {
-	database: null,
+	databaseLines: null,
 
 	cpfInputElement: null,
 	submitInputElement: null,
-	resultsElement: null,
+	resultsBodyElement: null,
 	resultTemplate: null,
 };
 
@@ -13,10 +13,10 @@ downloadDatabase();
 window.onload = function() {
 	STATE.cpfInputElement = document.getElementById("cpf-input");
 	STATE.submitInputElement = document.getElementById("submit-input");
-	STATE.resultsElement = document.querySelector(".results");
+	STATE.resultsBodyElement = document.querySelector(".results tbody");
 	STATE.resultTemplate = document.getElementById("result-template");
 
-	if (STATE.database == null) {
+	if (STATE.databaseLines == null) {
 		STATE.submitInputElement.value = "Atualizando Banco de Dados...";
 		STATE.submitInputElement.disabled = true;
 	} else {
@@ -26,25 +26,24 @@ window.onload = function() {
 };
 
 function onFormSubmit() {
-	if (STATE.database == null) {
+	if (STATE.databaseLines == null) {
 		return;
 	}
 
 	const query = STATE.cpfInputElement.value;
 	console.log("query: ", query);
 
-	while (STATE.resultsElement.lastChild) {
-		STATE.resultsElement.removeChild(STATE.resultsElement.lastChild);
+	while (STATE.resultsBodyElement.lastChild != null) {
+		STATE.resultsBodyElement.removeChild(STATE.resultsBodyElement.lastChild);
 	}
 
-	for (const entry of STATE.database) {
+	for (const entry of STATE.databaseLines) {
 		if (entry.cpf != query) {
 			continue;
 		}
 
-		console.log("add entry: ", entry);
 		const entryElement = createElementFromEntry(entry);
-		STATE.resultsElement.appendChild(entryElement);
+		STATE.resultsBodyElement.appendChild(entryElement);
 	}
 
 	return false;
@@ -53,11 +52,14 @@ function onFormSubmit() {
 function createElementFromEntry(entry) {
 	const element = STATE.resultTemplate.content.cloneNode(true);
 
-	const cpfElement = element.querySelector(".cpf");
-	cpfElement.textContent = entry.cpf;
+	const timestampElement = element.querySelector(".timestamp");
+	timestampElement.textContent = entry.timestamp;
 
-	const nameElement = element.querySelector(".name");
-	nameElement.textContent = entry.name;
+	const invoiceElement = element.querySelector(".invoice");
+	invoiceElement.textContent = entry.invoice;
+
+	const paidElement = element.querySelector(".paid");
+	paidElement.textContent = entry.paid;
 
 	return element;
 }
@@ -69,10 +71,10 @@ function downloadDatabase() {
 	request.onreadystatechange = function() {
 		if (request.readyState === request.DONE) {
 			if (request.status === 200) {
-				STATE.database = parseDatabase(request.responseText);
-				console.log("entry count: ", STATE.database.length);
+				STATE.databaseLines = parseDatabase(request.responseText);
+				console.log("entry count: ", STATE.databaseLines.length);
 			} else {
-				STATE.database = [];
+				STATE.databaseLines = [];
 			}
 
 			STATE.submitInputElement.disabled = false;
@@ -83,18 +85,27 @@ function downloadDatabase() {
 }
 
 function parseDatabase(text) {
+	const lines = text.split(/\r\n|\n\r|\n|\r/);
+	console.log(lines.length);
+
 	return [
 		{
-			cpf: "1",
-			name: "alberto",
+			cpf: "123",
+			timestamp: "hoje",
+			invoice: "34",
+			paid: "35",
 		},
 		{
-			cpf: "2",
-			name: "bernado",
+			cpf: "123",
+			timestamp: "ontem",
+			invoice: "34",
+			paid: "35",
 		},
 		{
-			cpf: "3",
-			name: "carlitos",
+			cpf: "123",
+			timestamp: "amanha",
+			invoice: "34",
+			paid: "35",
 		}
 	];
 }
