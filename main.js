@@ -122,6 +122,9 @@ function parseDatabase(text) {
 			continue;
 		}
 
+		let timestamp = parts[1].trim();
+		timestamp = timestamp.substring(4) + "/" + timestamp.substring(0, 4);
+
 		const invoice = parseCurrency(parts[2]);
 		if (invoice == NaN) {
 			console.error("nao deu pra extrair numero a partir do 'faturado':\n", line);
@@ -136,7 +139,7 @@ function parseDatabase(text) {
 
 		entries.push({
 			cpf: parts[0],
-			timestamp: parts[1],
+			timestamp: timestamp,
 			invoice: invoice,
 			paid: paid,
 		});
